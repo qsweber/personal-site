@@ -1,0 +1,17 @@
+html, body, #navbar-jumbotron {
+    height: 100%;
+}
+
+.container-main {
+    opacity: 0.6;
+    color: #ffffff;
+}
+
+.light-link {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+p {
+    padding: 0px 15px;
+}
