@@ -4,7 +4,9 @@ from personal_site.settings_local import ALLOWED_HOSTS, SECRET_KEY  # noqa
 
 from personal_site.settings_local import (
     DROPBOX_TOKEN, PHOTO_STORIES,
-    THUMBNAIL_URLS_FILE, HOME_PAGE_CONTENT, GA_CODE,
+    THUMBNAIL_URLS_FILE, GA_CODE,
+    BIO, EMAIL, GITHUB, LINKEDIN,
+    NAME, TAGLINE,
 )
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -12,10 +14,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.environ['PHOTO_STORIES'] = PHOTO_STORIES
 os.environ['THUMBNAIL_URLS_FILE'] = THUMBNAIL_URLS_FILE
 os.environ['DROPBOX_TOKEN'] = DROPBOX_TOKEN
-os.environ['HOME_PAGE_CONTENT'] = HOME_PAGE_CONTENT
 os.environ['GA_CODE'] = GA_CODE
+os.environ['BIO'] = BIO
+os.environ['EMAIL'] = EMAIL
+os.environ['GITHUB'] = GITHUB
+os.environ['LINKEDIN'] = LINKEDIN
+os.environ['NAME'] = NAME
+os.environ['TAGLINE'] = TAGLINE
 
-DEBUG = False
+if 'vagrant' in BASE_DIR:
+    DEBUG = True
+else:
+    DEBUG = False
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -51,6 +61,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'personal_site.context_processors.environ',
             ],
         },
     },

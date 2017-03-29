@@ -2,8 +2,8 @@ from setuptools import find_packages, setup
 
 setup(
     name='personal-site',
-    version='0.0.1',
-    description='fill in',
+    version='0.0.2',
+    description='Personal Website',
     author='Quinn Weber',
     maintainer='Quinn Weber',
     maintainer_email='quinnsweber@gmail.com',
