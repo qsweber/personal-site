@@ -3,17 +3,13 @@ import os
 from personal_site.settings_local import ALLOWED_HOSTS, SECRET_KEY  # noqa
 
 from personal_site.settings_local import (
-    DROPBOX_TOKEN, PHOTO_STORIES,
-    THUMBNAIL_URLS_FILE, GA_CODE,
+    GA_CODE,
     BIO, EMAIL, GITHUB, LINKEDIN,
     NAME, TAGLINE,
 )
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-os.environ['PHOTO_STORIES'] = PHOTO_STORIES
-os.environ['THUMBNAIL_URLS_FILE'] = THUMBNAIL_URLS_FILE
-os.environ['DROPBOX_TOKEN'] = DROPBOX_TOKEN
 os.environ['GA_CODE'] = GA_CODE
 os.environ['BIO'] = BIO
 os.environ['EMAIL'] = EMAIL
