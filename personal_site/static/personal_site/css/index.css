@@ -1,53 +1,26 @@
-html, body, #backstretch-image {
+html, body {
     height: 100%;
 }
 
+a.current {
+    text-decoration: underline;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 970px;
+  }
+}
+
 .container-main {
-    color: #F0FFFF;
     font-size: 22px;
     font-family: 'Cabin', sans-serif;
     font-weight: 400;
 }
 
-h3 {
-    font-size: 30px;
-    font-family: 'Cabin', sans-serif;
-    font-weight: 600;
-}
-
-h4 {
-    font-size: 18px;
-    font-family: 'Cabin', sans-serif;
-    font-weight: 400;
-}
-
 .light-link {
-    color: #F0FFFF;
+    color: #333;
     text-decoration: underline;
-}
-
-.navbar-static-top {
-    background-color: rgba(0,0,0,0.0);
-    color: #F0FFFF;
-    font-size: 18px;
-    font-family: 'Cabin', sans-serif;
-    font-weight: 600;
-    border: 0;
-    padding-top: 15px;
-}
-
-.navbar-default .navbar-nav>li>a {
-    color: #F0FFFF;
-}
-
-.navbar-nav>li>a:focus .navbar-nav>li>a:hover {
-    color: #F0FFFF;
-    text-decoration: underline;
-}
-
-#navbar {
-    border: none;
-    box-shadow: none;
 }
 
 .glyphicon {
