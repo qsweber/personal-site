@@ -1,22 +1,9 @@
 import os
 
-from personal_site.settings_local import ALLOWED_HOSTS, SECRET_KEY  # noqa
-
-from personal_site.settings_local import (
-    GA_CODE,
-    BIO, EMAIL, GITHUB, LINKEDIN,
-    NAME, TAGLINE,
-)
+ALLOWED_HOSTS = [os.environ['ALLOWED_HOSTS']]
+SECRET_KEY = os.environ['SECRET_KEY']
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-os.environ['GA_CODE'] = GA_CODE
-os.environ['BIO'] = BIO
-os.environ['EMAIL'] = EMAIL
-os.environ['GITHUB'] = GITHUB
-os.environ['LINKEDIN'] = LINKEDIN
-os.environ['NAME'] = NAME
-os.environ['TAGLINE'] = TAGLINE
 
 if 'vagrant' in BASE_DIR:
     DEBUG = True
@@ -31,7 +18,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'personal_site',
-    'django_photo_stories',
 ]
 
 MIDDLEWARE = [

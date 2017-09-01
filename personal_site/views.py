@@ -1,3 +1,5 @@
+import os
+
 from django.shortcuts import redirect, render
 
 
@@ -10,7 +12,7 @@ def index(request):
 
 
 def portfolio(request):
-    return redirect('http://stackoverflow.com/story/qsweber')
+    return redirect(os.environ['DEVELOPER_STORY'])
 
 
 def contact(request):

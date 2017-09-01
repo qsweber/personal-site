@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='personal-site',
-    version='0.0.2',
+    version='0.0.3',
     description='Personal Website',
     author='Quinn Weber',
     maintainer='Quinn Weber',
