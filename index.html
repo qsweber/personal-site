@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link href="/css/index.css" rel="stylesheet">
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-62236357-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script>
+    $(function(){
+        $('a').each(function() {
+            if ($(this).prop('href') == window.location.href) {
+                $(this).addClass('header-link-current');
+                return false;
+            }
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div class="container-main">
+        <div class="container" style="padding-top: 20px">
+            <div class="row">
+                <div class="col-xs-4" style="text-align: left">
+                    QSW
+                </div>
+                <div class="col-xs-8" style="text-align: right;">
+                    <a class='header-link' href="/">About</a>
+                    <a class='header-link' style="float: right; margin-left: 30px;" href="http://stackoverflow.com/story/qsweber">Portfolio</a>
+                </div>
+            </div>
+                <div class="row" style="margin-top: 40px">
+                    <div class="col-xs-12">
+                        <img src="/img/background.jpg" class="img-rounded img-responsive" style="width: 80%; margin: auto">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 40px; text-align:justify">
+                    <div class="col-xs-12">
+                        <p>
+                            I'm currently leading data ETL operations at <a class="link" href="https://www.energysavvy.com" target="_blank">EnergySavvy</a>
+                            in Seattle. My passion for solving new and interesting problems has
+                            led me on a path through manufacturing, finance, and, currently,
+                            software development. To learn more about my recent work, check out
+                            my <a class="link" target="_blank" href="/portfolio">portfolio</a>.
+                        </p>
+                        <p>
+                            Outside of the office, I enjoy long bike rides, picnics at Gas Works park, eating donuts,
+                            and finding new hiking trails to explore. I am always eager to learn something new. Last year,
+                            I completed a 6 month course on Machine Learning, and I have recently started teaching myself piano.
+                        </p>
+                        <p>
+                            <a style="text-decoration: none;" href="mailto:quinn@quinnweber.com" target="_blank">
+                                <span class="glyphicon glyphicon-envelope" aria-hidden="true" style="color: #333;"></span>
+                            </a>
+                            <a style="text-decoration: none;" href="http://github.com/qsweber/" target="_blank">
+                                <img src="/img/github3.png" style="margin-left:5px;width:22px;height:22px;"></img>
+                            </a>
+                            <a style="text-decoration: none;" href="https://www.linkedin.com/in/quinn-weber-853aa536/" target="_blank">
+                                <img src="/img/linkedin4.png" style="margin-left:5px;width:22px;height:22px;"></img>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
