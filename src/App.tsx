@@ -30,15 +30,15 @@ const NavBar = styled.div(() => ({
 
 const Initials = styled.div(() => ({
   textAlign: "left",
+  fontWeight: "bold",
+  fontSize: 36,
 }));
 
-const NavUl = styled.div(() => ({
-  textAlign: "right",
-  marginLeft: "auto",
+const LinkGroup = styled.nav(() => ({
+  margin: "auto 0", // centers it vertically within NavBar
 }));
 
-const NavLi = styled.div(() => ({
-  display: "inline-block",
+const NavLink = styled(Link)(() => ({
   marginLeft: 20,
 }));
 
@@ -47,16 +47,10 @@ function Layout() {
     <Container>
       <NavBar>
         <Initials>QSW</Initials>
-        <nav>
-          <NavUl>
-            <NavLi>
-              <Link to="/">Home</Link>
-            </NavLi>
-            <NavLi>
-              <Link to="https://github.com/qsweber">Portfolio</Link>
-            </NavLi>
-          </NavUl>
-        </nav>
+        <LinkGroup>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="https://github.com/qsweber">Portfolio</NavLink>
+        </LinkGroup>
       </NavBar>
       <hr />
       <Outlet />
