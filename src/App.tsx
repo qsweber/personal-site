@@ -49,7 +49,9 @@ function Layout() {
         <Initials>QSW</Initials>
         <LinkGroup>
           <NavLink to="/">Home</NavLink>
-          <NavLink to="https://github.com/qsweber">Portfolio</NavLink>
+          <NavLink to="https://github.com/qsweber" target="_blank">
+            Portfolio
+          </NavLink>
         </LinkGroup>
       </NavBar>
       <hr />
