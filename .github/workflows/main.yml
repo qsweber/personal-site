@@ -29,6 +29,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           pip install awscli
-          aws s3 sync --acl public-read --delete ./out s3://www.quinnweber.com
+          aws s3 sync --acl public-read --delete ./build s3://www.quinnweber.com
           aws configure set preview.cloudfront true
           aws cloudfront create-invalidation --distribution-id E1H4R1IMHN7A8Z --paths '/*'
