@@ -21,6 +21,7 @@ export default function App() {
 const Container = styled.div(() => ({
   maxWidth: 800,
   margin: "0 auto",
+  fontFamily: "Work Sans",
 }));
 
 const NavBar = styled.div(() => ({
@@ -30,7 +31,7 @@ const NavBar = styled.div(() => ({
 
 const Initials = styled.div(() => ({
   textAlign: "left",
-  fontWeight: "bold",
+  fontWeight: "800",
   fontSize: 36,
 }));
 
@@ -40,6 +41,18 @@ const LinkGroup = styled.nav(() => ({
 
 const NavLink = styled(Link)(() => ({
   marginLeft: 20,
+  textDecoration: "none",
+  color: "inherit",
+  fontWeight: "800",
+}));
+
+const ContactImg = styled.img(() => ({
+  width: 35,
+  height: 35,
+}));
+
+const Footer = styled.footer(() => ({
+  marginTop: 20,
 }));
 
 function Layout() {
@@ -54,8 +67,18 @@ function Layout() {
           </NavLink>
         </LinkGroup>
       </NavBar>
-      <hr />
       <Outlet />
+      <Footer>
+        <Link to="mailto:quinn@quinnweber.com">
+          <ContactImg src="mail.png" alt="email" />
+        </Link>
+        <Link to="https://www.linkedin.com/in/quinn-weber-853aa536/">
+          <ContactImg src="linkedin.png" alt="linkedin" />
+        </Link>
+        <Link to="http://github.com/qsweber/">
+          <ContactImg src="github.png" alt="github" />
+        </Link>
+      </Footer>
     </Container>
   );
 }
