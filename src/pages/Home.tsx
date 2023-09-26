@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 const BackgroundImg = styled.img(() => ({
   maxWidth: "100%",
   borderRadius: 10,
-  marginTop: 20,
 }));
 
 const Paragraph = styled.div(() => ({
@@ -13,6 +12,9 @@ const Paragraph = styled.div(() => ({
 export const Home = () => (
   <div>
     <BackgroundImg src="background.jpg" alt="background" />
-    <Paragraph>Hello!</Paragraph>
+    <Paragraph>
+      Hello! Check out my portfolio of work or contact me at one of the links
+      below.
+    </Paragraph>
   </div>
 );

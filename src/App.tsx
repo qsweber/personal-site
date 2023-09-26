@@ -27,6 +27,7 @@ const Container = styled.div(() => ({
 const NavBar = styled.div(() => ({
   display: "flex",
   justifyContent: "space-between",
+  padding: "20px 0",
 }));
 
 const Initials = styled.div(() => ({
@@ -49,6 +50,7 @@ const NavLink = styled(Link)(() => ({
 const ContactImg = styled.img(() => ({
   width: 35,
   height: 35,
+  paddingRight: 5,
 }));
 
 const Footer = styled.footer(() => ({
