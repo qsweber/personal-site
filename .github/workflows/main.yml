@@ -19,8 +19,8 @@ jobs:
         if: github.event_name == 'push'
         id: package-version
         run: |
-          PACKAGE_VERSION=$(node -e "console.log(JSON.parse(fs.readFileSync('package.json')).version)")
-          echo "package-version=$(echo $PACKAGE_VERSION)" >> $GITHUB_OUTPUT
+          MAJOR_MINOR=$(node -e "console.log(JSON.parse(fs.readFileSync('package.json')).version.replace(/\.\d+$/, ''))")
+          echo "package-version=$(echo $MAJOR_MINOR)" >> $GITHUB_OUTPUT
       - run: zip -r build.zip build/*
       - name: create release
         if: github.event_name == 'push'
