@@ -18,14 +18,17 @@ jobs:
       - name: get-npm-version
         if: github.event_name == 'push'
         id: package-version
-        uses: martinbeentjes/npm-get-version-action@v1.3.1
+        run: |
+          PACKAGE_VERSION=$(node -e "console.log(JSON.parse(fs.readFileSync('package.json')).version)")
+          echo "package-version=$(echo $PACKAGE_VERSION)" >> $GITHUB_OUTPUT
+      - run: zip -r build.zip build/*
       - name: create release
         if: github.event_name == 'push'
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "./build/*"
-          name: Release ${{ steps.package-version.outputs.version }}.${{ github.run_number }}
-          tag: v${{ steps.package-version.outputs.version }}.${{ github.run_number }}
+          artifacts: "build.zip"
+          name: Release ${{ steps.package-version.outputs.package-version }}.${{ github.run_number }}
+          tag: v${{ steps.package-version.outputs.package-version }}.${{ github.run_number }}
       - name: deploy
         if: github.event_name == 'push'
         env:
