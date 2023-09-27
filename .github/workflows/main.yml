@@ -7,20 +7,25 @@ on:
     branches: [master]
 
 jobs:
-  build_and_deploy:
+  build_release_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
+      - run: npm install
+      - run: npm run test
+      - run: npm run build
+      - name: get-npm-version
+        if: github.event_name == 'push'
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+      - name: create release
+        if: github.event_name == 'push'
+        uses: ncipollo/release-action@v1
         with:
-          node-version: 18
-          # registry-url: https://registry.npmjs.org/
-      - name: install
-        run: npm install
-      # - name: test
-      #   run: npm run test
-      - name: build
-        run: npm run build
+          artifacts: "./build/*"
+          name: Release ${{ steps.package-version.outputs.version }}.${{ github.run_number }}
+          tag: v${{ steps.package-version.outputs.version }}.${{ github.run_number }}
       - name: deploy
         if: github.event_name == 'push'
         env:
