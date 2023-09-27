@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet, Link } from "react-router-dom";
+import { Routes, Route, Outlet, NavLink, Link } from "react-router-dom";
 import { Home } from "./pages/Home";
 import styled from "@emotion/styled";
 import { NotFound } from "./pages/NotFound";
@@ -32,7 +32,7 @@ const NavBar = styled.div(() => ({
 
 const Initials = styled.div(() => ({
   textAlign: "left",
-  fontWeight: "800",
+  fontWeight: "600",
   fontSize: 36,
 }));
 
@@ -40,11 +40,11 @@ const LinkGroup = styled.nav(() => ({
   margin: "auto 0", // centers it vertically within NavBar
 }));
 
-const NavLink = styled(Link)(() => ({
+const SpacedNavLink = styled(NavLink)(() => ({
   marginLeft: 20,
   textDecoration: "none",
   color: "inherit",
-  fontWeight: "800",
+  fontWeight: "600",
 }));
 
 const ContactImg = styled.img(() => ({
@@ -63,21 +63,31 @@ function Layout() {
       <NavBar>
         <Initials>QSW</Initials>
         <LinkGroup>
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="https://github.com/qsweber" target="_blank">
+          <SpacedNavLink
+            style={({ isActive }) => ({
+              textDecoration: isActive ? "underline" : "none",
+            })}
+            to="/"
+          >
+            Home
+          </SpacedNavLink>
+          <SpacedNavLink to="https://github.com/qsweber" target="_blank">
             Portfolio
-          </NavLink>
+          </SpacedNavLink>
         </LinkGroup>
       </NavBar>
       <Outlet />
       <Footer>
-        <Link to="mailto:quinn@quinnweber.com">
+        <Link to="mailto:quinn@quinnweber.com" target="_blank">
           <ContactImg src="mail.png" alt="email" />
         </Link>
-        <Link to="https://www.linkedin.com/in/quinn-weber-853aa536/">
+        <Link
+          to="https://www.linkedin.com/in/quinn-weber-853aa536/"
+          target="_blank"
+        >
           <ContactImg src="linkedin.png" alt="linkedin" />
         </Link>
-        <Link to="http://github.com/qsweber/">
+        <Link to="http://github.com/qsweber/" target="_blank">
           <ContactImg src="github.png" alt="github" />
         </Link>
       </Footer>
