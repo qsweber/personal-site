@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  build_release_deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,15 +15,36 @@ jobs:
       - run: npm install
       - run: npm run test
       - run: npm run build
+  infra:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+      - run: npm install
+      - uses: pulumi/actions@v3
+        with:
+          work-dir: infrastructure
+          command: up
+          expect-no-changes: true
+          stack-name: personal-site
+          cloud-url: ${{ secrets.PULUMI_CLOUD_URL }}
+        env:
+          PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
+  release_deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+      - run: npm install --omit=dev
+      - run: npm run build
       - name: get-npm-version
-        if: github.event_name == 'push'
         id: package-version
         run: |
           MAJOR_MINOR=$(node -e "console.log(JSON.parse(fs.readFileSync('package.json')).version.replace(/\.\d+$/, ''))")
           echo "package-version=$(echo $MAJOR_MINOR)" >> $GITHUB_OUTPUT
       - run: zip -r build.zip build/*
       - name: create release
-        if: github.event_name == 'push'
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build.zip"
