@@ -42,7 +42,7 @@ jobs:
         id: package-version
         run: |
           VERSION=$(node -e "console.log(JSON.parse(fs.readFileSync('package.json')).version.replace(/\.\d+$/, ''))")
-          VERSION+=".${{ github.run_number }}""
+          VERSION+=".${{ github.run_number }}"
           echo "package-version=$(echo $VERSION)" >> $GITHUB_OUTPUT
       - run: zip -r build.zip build/*
       - name: create release
