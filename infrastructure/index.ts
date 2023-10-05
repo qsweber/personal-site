@@ -18,7 +18,7 @@ new aws.s3.Bucket("www.quinnweber.com", {
         enabled: true,
     },
     website: {
-        errorDocument: "error1.html",
+        errorDocument: "error.html",
         indexDocument: "index.html",
     },
     websiteDomain: "s3-website-us-west-2.amazonaws.com",
