@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
       - run: npm install
-      - uses: pulumi/actions@v3
+      - uses: pulumi/actions@v4
         with:
           work-dir: infrastructure
           command: up
