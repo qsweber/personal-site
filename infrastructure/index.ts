@@ -73,7 +73,7 @@ const exampleBucketOwnershipControls = new aws.s3.BucketOwnershipControls(
 const distribution = new aws.cloudfront.Distribution(
   `${bucket_name_and_url}-distribution`,
   {
-    aliases: [bucket_name_and_url],
+    aliases: ["quinnweber.com", bucket_name_and_url],
     defaultCacheBehavior: {
       allowedMethods: ["GET", "HEAD"],
       cachedMethods: ["GET", "HEAD"],
