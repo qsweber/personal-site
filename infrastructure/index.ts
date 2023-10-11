@@ -1,4 +1,5 @@
 import * as aws from "@pulumi/aws";
+import * as pulumi from "@pulumi/pulumi";
 
 const bucket_name_and_url = "www.quinnweber.com";
 
@@ -32,10 +33,47 @@ const bucket = new aws.s3.Bucket(
   },
 );
 
-const distribution = new aws.cloudfront.Distribution(
-  "distribution",
+const publicAccessBlock = new aws.s3.BucketPublicAccessBlock(
+  `${bucket_name_and_url}-public-access-block`,
   {
-    aliases: [bucket_name_and_url.slice(4), bucket_name_and_url],
+    bucket: bucket.id,
+    blockPublicAcls: false,
+  },
+);
+
+const bucketPolicy = new aws.s3.BucketPolicy(
+  `${bucket_name_and_url}-bucket-policy`,
+  {
+    bucket: bucket.id, // refer to the bucket created earlier
+    policy: pulumi.jsonStringify({
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Effect: "Allow",
+          Principal: "*",
+          Action: ["s3:GetObject"],
+          Resource: [pulumi.interpolate`${bucket.arn}/*`],
+        },
+      ],
+    }),
+  },
+  { dependsOn: publicAccessBlock },
+);
+
+const exampleBucketOwnershipControls = new aws.s3.BucketOwnershipControls(
+  `${bucket_name_and_url}-ownership-controls`,
+  {
+    bucket: bucket.id,
+    rule: {
+      objectOwnership: "ObjectWriter",
+    },
+  },
+);
+
+const distribution = new aws.cloudfront.Distribution(
+  `${bucket_name_and_url}-distribution`,
+  {
+    aliases: ["quinnweber.com", bucket_name_and_url],
     defaultCacheBehavior: {
       allowedMethods: ["GET", "HEAD"],
       cachedMethods: ["GET", "HEAD"],
@@ -84,5 +122,9 @@ const distribution = new aws.cloudfront.Distribution(
   },
 );
 
-export const bucketId = bucket.id;
-export const distributionId = distribution.id;
+export const bucketUrn = bucket.urn;
+export const publicAccessBlockUrn = publicAccessBlock.urn;
+export const bucketPolicyUrn = bucketPolicy.urn;
+export const exampleBucketOwnershipControlsUrn =
+  exampleBucketOwnershipControls.urn;
+export const distributionUrn = distribution.urn;
