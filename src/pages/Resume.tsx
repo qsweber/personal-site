@@ -8,6 +8,7 @@ const Container = styled.div(() => ({
   maxWidth: 670,
   margin: "0 auto",
   fontFamily: "Work Sans",
+  fontSize: "12px",
 }));
 
 const Line = styled.div(() => ({
@@ -16,30 +17,31 @@ const Line = styled.div(() => ({
   marginBottom: SINGLE_SPACE,
 }));
 
-const Company = styled.div(() => ({
+const Header = styled.div(() => ({
   fontWeight: "bold",
-  fontSize: "1.4em",
+  fontSize: "14px",
+}));
+
+const Section = styled.div(() => ({
+  marginTop: SINGLE_SPACE * 2,
+  marginLeft: SINGLE_SPACE * 2,
 }));
 
 const Location = styled.div(() => ({}));
 
-const DateRange = styled.div(() => ({
+const Italicized = styled.div(() => ({
   fontStyle: "italic",
 }));
 
-const Title = styled.div(() => ({
-  fontStyle: "italic",
+const Accomplishment = styled.div(() => ({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "flex-start",
 }));
 
-const Accomplishments = styled.ul(() => ({
-  listStylePosition: "outside",
-  paddingLeft: 16,
-  marginTop: 0,
-  marginBottom: 0,
-}));
-
-const Accomplishment = styled.li(() => ({}));
-
+/**
+ * Puts wrapped component on the bottom of the parent div
+ */
 const BottomWrapper = styled.div(() => ({
   display: "flex",
   flexDirection: "column",
@@ -49,32 +51,58 @@ const BottomWrapper = styled.div(() => ({
 export const Resume = () => (
   <Container>
     <Line style={{ justifyContent: "center" }}>
-      <Company>Quinn Weber</Company>
+      <Header>Quinn Weber</Header>
     </Line>
     <Line style={{ justifyContent: "center" }}>
-      Seattle, WA - quinn@quinnweber.com
+      Senior Software Enginer - Seattle, WA - quinn@quinnweber.com
     </Line>
-    {RESUME.map((job, index) => (
+    <hr />
+    {RESUME.sections.map((section, sectionIndex) => (
       <div
         style={{
-          marginBottom: index < RESUME.length - 1 ? SINGLE_SPACE * 2 : 0,
+          marginBottom:
+            sectionIndex < RESUME.sections.length - 1 ? SINGLE_SPACE * 2 : 0,
         }}
       >
-        <Line>
-          <Company>{job.company}</Company>
-          <BottomWrapper>
-            <Location>{job.location}</Location>
-          </BottomWrapper>
-        </Line>
-        <Line>
-          <Title>{job.title}</Title>
-          <DateRange>{job.dateRange}</DateRange>
-        </Line>
-        <Accomplishments>
-          {job.accomplishments.map((accomplishment) => (
-            <Accomplishment>{accomplishment}</Accomplishment>
+        <Header>{section.header}</Header>
+        <Section>
+          {section.items.map((job, index) => (
+            <div
+              style={{
+                marginBottom:
+                  index < section.items.length - 1 ? SINGLE_SPACE * 2 : 0,
+              }}
+            >
+              <Line>
+                <Header>{job.company}</Header>
+                <BottomWrapper>
+                  <Location>{job.location}</Location>
+                </BottomWrapper>
+              </Line>
+              {job.roles.map((role, roleIndex) => (
+                <div
+                  style={{
+                    marginBottom:
+                      roleIndex < job.roles.length - 1 ? SINGLE_SPACE : 0,
+                  }}
+                >
+                  <Line>
+                    <Italicized>{role.title}</Italicized>
+                    <Italicized>{role.dateRange}</Italicized>
+                  </Line>
+                  <div>
+                    {role.accomplishments.map((accomplishment) => (
+                      <Accomplishment>
+                        <div style={{ paddingRight: SINGLE_SPACE }}>{"•"}</div>
+                        <div>{accomplishment}</div>
+                      </Accomplishment>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           ))}
-        </Accomplishments>
+        </Section>
       </div>
     ))}
   </Container>
