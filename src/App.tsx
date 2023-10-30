@@ -11,9 +11,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="resume" element={<Resume />} />
           <Route path="*" element={<NotFound />} />
         </Route>
+        <Route path="/resume" element={<Resume />} />
       </Routes>
     </div>
   );
