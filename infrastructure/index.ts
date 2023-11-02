@@ -22,7 +22,7 @@ const bucket = new aws.s3.Bucket(
       enabled: true,
     },
     website: {
-      errorDocument: "error.html",
+      errorDocument: "index.html",
       indexDocument: "index.html",
     },
     websiteDomain: "s3-website-us-west-2.amazonaws.com",

@@ -1,10 +1,10 @@
-import { RESUME } from "../lib/resume";
+import { FunctionComponent } from "react";
+import { Resume as IResume } from "../lib/resume";
 import styled from "@emotion/styled";
 
 const SINGLE_SPACE = 4;
 
 const Container = styled.div(() => ({
-  paddingTop: SINGLE_SPACE * 4,
   maxWidth: 670,
   margin: "0 auto",
   fontFamily: "Work Sans",
@@ -14,7 +14,7 @@ const Container = styled.div(() => ({
 const Line = styled.div(() => ({
   display: "flex",
   justifyContent: "space-between",
-  marginBottom: SINGLE_SPACE,
+  marginTop: SINGLE_SPACE,
 }));
 
 const Header = styled.div(() => ({
@@ -22,21 +22,12 @@ const Header = styled.div(() => ({
   fontSize: "14px",
 }));
 
-const Section = styled.div(() => ({
-  marginTop: SINGLE_SPACE * 2,
+const Items = styled.div(() => ({
   marginLeft: SINGLE_SPACE * 2,
 }));
 
-const Location = styled.div(() => ({}));
-
 const Italicized = styled.div(() => ({
   fontStyle: "italic",
-}));
-
-const Accomplishment = styled.div(() => ({
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "flex-start",
 }));
 
 /**
@@ -48,62 +39,63 @@ const BottomWrapper = styled.div(() => ({
   justifyContent: "flex-end",
 }));
 
-export const Resume = () => (
+const SpacedSection = styled.div(() => ({
+  marginTop: SINGLE_SPACE,
+}));
+
+const DoubleSpacedSection = styled.div(() => ({
+  marginTop: SINGLE_SPACE * 2,
+}));
+
+const BulletWrapper = styled.div(() => ({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "flex-start",
+}));
+
+const BulletContent = styled.div(() => ({
+  marginLeft: SINGLE_SPACE,
+}));
+
+export const Resume: FunctionComponent<{ resume: IResume }> = ({ resume }) => (
   <Container>
     <Line style={{ justifyContent: "center" }}>
-      <Header>Quinn Weber</Header>
+      <Header>{resume.name}</Header>
     </Line>
-    <Line style={{ justifyContent: "center" }}>
-      Senior Software Enginer - Seattle, WA - quinn@quinnweber.com
-    </Line>
+    <Line style={{ justifyContent: "center" }}>{resume.description}</Line>
     <hr />
-    {RESUME.sections.map((section, sectionIndex) => (
-      <div
-        style={{
-          marginBottom:
-            sectionIndex < RESUME.sections.length - 1 ? SINGLE_SPACE * 2 : 0,
-        }}
-      >
-        <Header>{section.header}</Header>
-        <Section>
-          {section.items.map((job, index) => (
-            <div
-              style={{
-                marginBottom:
-                  index < section.items.length - 1 ? SINGLE_SPACE * 2 : 0,
-              }}
-            >
+    {resume.sections.map(({ header, entities }) => (
+      <DoubleSpacedSection>
+        <Header>{header}</Header>
+        <Items>
+          {entities.map(({ entityName, location, subSections }) => (
+            <DoubleSpacedSection>
               <Line>
-                <Header>{job.company}</Header>
+                <Header>{entityName}</Header>
                 <BottomWrapper>
-                  <Location>{job.location}</Location>
+                  <div>{location}</div>
                 </BottomWrapper>
               </Line>
-              {job.roles.map((role, roleIndex) => (
-                <div
-                  style={{
-                    marginBottom:
-                      roleIndex < job.roles.length - 1 ? SINGLE_SPACE : 0,
-                  }}
-                >
+              {subSections.map((subSection) => (
+                <DoubleSpacedSection>
                   <Line>
-                    <Italicized>{role.title}</Italicized>
-                    <Italicized>{role.dateRange}</Italicized>
+                    <Italicized>{subSection.description}</Italicized>
+                    <Italicized>{subSection.dateRange}</Italicized>
                   </Line>
-                  <div>
-                    {role.accomplishments.map((accomplishment) => (
-                      <Accomplishment>
-                        <div style={{ paddingRight: SINGLE_SPACE }}>{"•"}</div>
-                        <div>{accomplishment}</div>
-                      </Accomplishment>
+                  <SpacedSection>
+                    {subSection.accomplishments.map((accomplishment) => (
+                      <BulletWrapper>
+                        <BulletContent>{"•"}</BulletContent>
+                        <BulletContent>{accomplishment}</BulletContent>
+                      </BulletWrapper>
                     ))}
-                  </div>
-                </div>
+                  </SpacedSection>
+                </DoubleSpacedSection>
               ))}
-            </div>
+            </DoubleSpacedSection>
           ))}
-        </Section>
-      </div>
+        </Items>
+      </DoubleSpacedSection>
     ))}
   </Container>
 );
