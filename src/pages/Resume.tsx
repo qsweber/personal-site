@@ -22,8 +22,8 @@ const Header = styled.div(() => ({
   fontSize: "14px",
 }));
 
-const Items = styled.div(() => ({
-  marginLeft: SINGLE_SPACE * 2,
+const LeftSpacedSection = styled.div(() => ({
+  marginLeft: SINGLE_SPACE,
 }));
 
 const Italicized = styled.div(() => ({
@@ -39,11 +39,11 @@ const BottomWrapper = styled.div(() => ({
   justifyContent: "flex-end",
 }));
 
-const SpacedSection = styled.div(() => ({
+const TopSpacedSection = styled.div(() => ({
   marginTop: SINGLE_SPACE,
 }));
 
-const DoubleSpacedSection = styled.div(() => ({
+const DoubleTopSpacedSection = styled.div(() => ({
   marginTop: SINGLE_SPACE * 2,
 }));
 
@@ -51,10 +51,6 @@ const BulletWrapper = styled.div(() => ({
   display: "flex",
   flexDirection: "row",
   justifyContent: "flex-start",
-}));
-
-const BulletContent = styled.div(() => ({
-  marginLeft: SINGLE_SPACE,
 }));
 
 export const Resume: FunctionComponent<{ resume: IResume }> = ({ resume }) => (
@@ -65,37 +61,43 @@ export const Resume: FunctionComponent<{ resume: IResume }> = ({ resume }) => (
     <Line style={{ justifyContent: "center" }}>{resume.description}</Line>
     <hr />
     {resume.sections.map(({ header, entities }) => (
-      <DoubleSpacedSection>
+      <DoubleTopSpacedSection>
         <Header>{header}</Header>
-        <Items>
+        <LeftSpacedSection>
           {entities.map(({ entityName, location, subSections }) => (
-            <DoubleSpacedSection>
-              <Line>
-                <Header>{entityName}</Header>
-                <BottomWrapper>
-                  <div>{location}</div>
-                </BottomWrapper>
-              </Line>
+            <DoubleTopSpacedSection>
+              {entityName && location && (
+                <Line>
+                  <Header>{entityName}</Header>
+                  <BottomWrapper>
+                    <div>{location}</div>
+                  </BottomWrapper>
+                </Line>
+              )}
               {subSections.map((subSection) => (
-                <DoubleSpacedSection>
+                <DoubleTopSpacedSection>
                   <Line>
-                    <Italicized>{subSection.description}</Italicized>
-                    <Italicized>{subSection.dateRange}</Italicized>
+                    {subSection.description && (
+                      <Italicized>{subSection.description}</Italicized>
+                    )}
+                    {subSection.dateRange && (
+                      <Italicized>{subSection.dateRange}</Italicized>
+                    )}
                   </Line>
-                  <SpacedSection>
+                  <TopSpacedSection>
                     {subSection.accomplishments.map((accomplishment) => (
                       <BulletWrapper>
-                        <BulletContent>{"•"}</BulletContent>
-                        <BulletContent>{accomplishment}</BulletContent>
+                        <LeftSpacedSection>{"•"}</LeftSpacedSection>
+                        <LeftSpacedSection>{accomplishment}</LeftSpacedSection>
                       </BulletWrapper>
                     ))}
-                  </SpacedSection>
-                </DoubleSpacedSection>
+                  </TopSpacedSection>
+                </DoubleTopSpacedSection>
               ))}
-            </DoubleSpacedSection>
+            </DoubleTopSpacedSection>
           ))}
-        </Items>
-      </DoubleSpacedSection>
+        </LeftSpacedSection>
+      </DoubleTopSpacedSection>
     ))}
   </Container>
 );
