@@ -74,7 +74,7 @@ const exampleBucketOwnershipControls = new aws.s3.BucketOwnershipControls(
 const distribution = new aws.cloudfront.Distribution(
   `${bucketNameAndUrl}-distribution`,
   {
-    aliases: [bucketNameAndUrl.replace('www.', ''), bucketNameAndUrl],
+    aliases: [bucketNameAndUrl.replace("www.", ""), bucketNameAndUrl],
     defaultCacheBehavior: {
       allowedMethods: ["GET", "HEAD"],
       cachedMethods: ["GET", "HEAD"],
@@ -123,9 +123,78 @@ const distribution = new aws.cloudfront.Distribution(
   },
 );
 
+const zone = new aws.route53.Zone(
+  `${bucketNameAndUrl}-zone`,
+  {
+    comment: "",
+    name: "quinnweber.com",
+  },
+  {
+    protect: true,
+  },
+);
+
+const aRecord = new aws.route53.Record(
+  `${bucketNameAndUrl}-a-record`,
+  {
+    aliases: [
+      {
+        evaluateTargetHealth: false,
+        name: distribution.domainName,
+        zoneId: distribution.hostedZoneId,
+      },
+    ],
+    name: "quinnweber.com",
+    type: aws.route53.RecordType.A,
+    zoneId: zone.id,
+  },
+  {
+    protect: true,
+  },
+);
+
+const aaaaRecord = new aws.route53.Record(
+  `${bucketNameAndUrl}-aaaa-record`,
+  {
+    aliases: [
+      {
+        evaluateTargetHealth: false,
+        name: distribution.domainName,
+        zoneId: distribution.hostedZoneId,
+      },
+    ],
+    name: "quinnweber.com",
+    type: aws.route53.RecordType.AAAA,
+    zoneId: zone.id,
+  },
+  {
+    protect: true,
+  },
+);
+
+const distributionDomainName = distribution.domainName.apply((t) => `${t}.`);
+
+const cNameRecord = new aws.route53.Record(
+  `${bucketNameAndUrl}-cname-record`,
+  {
+    name: bucketNameAndUrl,
+    records: [distributionDomainName],
+    ttl: 3600,
+    type: aws.route53.RecordType.CNAME,
+    zoneId: zone.id,
+  },
+  {
+    protect: true,
+  },
+);
+
 export const bucketUrn = bucket.urn;
 export const publicAccessBlockUrn = publicAccessBlock.urn;
 export const bucketPolicyUrn = bucketPolicy.urn;
 export const exampleBucketOwnershipControlsUrn =
   exampleBucketOwnershipControls.urn;
 export const distributionUrn = distribution.urn;
+export const zoneUrn = zone.urn;
+export const aRecordUrn = aRecord.urn;
+export const aaaaRecordUrn = aaaaRecord.urn;
+export const cNameRecordUrn = cNameRecord.urn;
