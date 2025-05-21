@@ -15,6 +15,6 @@ export const Home = () => (
     <Paragraph>
       Hello! Check out my portfolio of work or contact me at one of the links
       below.
-    </Paragraphhhh>
+    </Paragraph>
   </div>
 );
