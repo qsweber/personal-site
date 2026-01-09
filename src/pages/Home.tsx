@@ -13,8 +13,9 @@ export const Home = () => (
   <div>
     <BackgroundImg src="background.jpg" alt="background" />
     <Paragraph>
-      Hello! Check out my portfolio of work or contact me at one of the links
-      below.
+      Hello! Welcome to my personal site. Feel free to explore my portfolio of
+      work or reach out via the contact links below. Looking forward to
+      connecting in 2025!
     </Paragraph>
   </div>
 );
