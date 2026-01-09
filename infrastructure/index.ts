@@ -124,7 +124,7 @@ const distribution = new aws.cloudfront.Distribution(
 );
 
 const zone = new aws.route53.Zone(
-  `${bucketNameAndUrl}-zone`,
+  "www.quinnweber.com-zone",
   {
     comment: "",
     name: "quinnweber.com",
