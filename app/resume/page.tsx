@@ -1,4 +1,5 @@
-import { FunctionComponent } from "react";
+"use client";
+
 import { RESUME } from "../lib/resume";
 import styled from "@emotion/styled";
 
@@ -60,46 +61,52 @@ export default function Resume() {
         <Header>{RESUME.name}</Header>
       </Line>
       <Line style={{ justifyContent: "center" }}>{RESUME.description}</Line>
-    <hr />
-    {RESUME.sections.map(({ header, entities }) => (
-      <DoubleTopSpacedSection>
-        <Header>{header}</Header>
-        <LeftSpacedSection>
-          {entities.map(({ entityName, location, subSections }) => (
-            <DoubleTopSpacedSection>
-              {entityName && location && (
-                <Line>
-                  <Header>{entityName}</Header>
-                  <BottomWrapper>
-                    <div>{location}</div>
-                  </BottomWrapper>
-                </Line>
-              )}
-              {subSections.map((subSection) => (
-                <DoubleTopSpacedSection>
-                  <Line>
-                    {subSection.description && (
-                      <Italicized>{subSection.description}</Italicized>
-                    )}
-                    {subSection.dateRange && (
-                      <Italicized>{subSection.dateRange}</Italicized>
-                    )}
-                  </Line>
-                  <TopSpacedSection>
-                    {subSection.accomplishments.map((accomplishment) => (
-                      <BulletWrapper>
-                        <LeftSpacedSection>{"•"}</LeftSpacedSection>
-                        <LeftSpacedSection>{accomplishment}</LeftSpacedSection>
-                      </BulletWrapper>
-                    ))}
-                  </TopSpacedSection>
+      <hr />
+      {RESUME.sections.map(({ header, entities }) => (
+        <DoubleTopSpacedSection key={header}>
+          <Header>{header}</Header>
+          <LeftSpacedSection>
+            {entities.map(
+              ({ entityName, location, subSections }, entityIndex) => (
+                <DoubleTopSpacedSection key={entityName || entityIndex}>
+                  {entityName && location && (
+                    <Line>
+                      <Header>{entityName}</Header>
+                      <BottomWrapper>
+                        <div>{location}</div>
+                      </BottomWrapper>
+                    </Line>
+                  )}
+                  {subSections.map((subSection, subSectionIndex) => (
+                    <DoubleTopSpacedSection key={subSectionIndex}>
+                      <Line>
+                        {subSection.description && (
+                          <Italicized>{subSection.description}</Italicized>
+                        )}
+                        {subSection.dateRange && (
+                          <Italicized>{subSection.dateRange}</Italicized>
+                        )}
+                      </Line>
+                      <TopSpacedSection>
+                        {subSection.accomplishments.map(
+                          (accomplishment, accomplishmentIndex) => (
+                            <BulletWrapper key={accomplishmentIndex}>
+                              <LeftSpacedSection>{"•"}</LeftSpacedSection>
+                              <LeftSpacedSection>
+                                {accomplishment}
+                              </LeftSpacedSection>
+                            </BulletWrapper>
+                          ),
+                        )}
+                      </TopSpacedSection>
+                    </DoubleTopSpacedSection>
+                  ))}
                 </DoubleTopSpacedSection>
-              ))}
-            </DoubleTopSpacedSection>
-          ))}
-        </LeftSpacedSection>
-      </DoubleTopSpacedSection>
-    ))}
-  </Container>
+              ),
+            )}
+          </LeftSpacedSection>
+        </DoubleTopSpacedSection>
+      ))}
+    </Container>
   );
 }

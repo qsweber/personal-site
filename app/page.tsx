@@ -12,11 +12,11 @@ const BackgroundImg = styled.img(() => ({
 export default function Home() {
   return (
     <div>
-    <BackgroundImg src="background.jpg" alt="background" />
-    <Section>
-      Hello! Check out my portfolio of work or contact me at one of the links
-      below.
-    </Section>
+      <BackgroundImg src="background.jpg" alt="background" />
+      <Section>
+        Hello! Check out my portfolio of work or contact me at one of the links
+        below.
+      </Section>
     </div>
   );
 }
