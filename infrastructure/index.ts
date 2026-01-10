@@ -74,7 +74,7 @@ const exampleBucketOwnershipControls = new aws.s3.BucketOwnershipControls(
 const distribution = new aws.cloudfront.Distribution(
   `${bucketNameAndUrl}-distribution`,
   {
-    aliases: [bucketNameAndUrl.replace("www.", ""), bucketNameAndUrl],
+    aliases: [bucketNameAndUrl],
     defaultCacheBehavior: {
       allowedMethods: ["GET", "HEAD"],
       cachedMethods: ["GET", "HEAD"],
@@ -124,7 +124,7 @@ const distribution = new aws.cloudfront.Distribution(
 );
 
 const zone = new aws.route53.Zone(
-  `${bucketNameAndUrl}-zone`,
+  "www.quinnweber.com-zone",
   {
     comment: "",
     name: "quinnweber.com",
@@ -134,51 +134,57 @@ const zone = new aws.route53.Zone(
   },
 );
 
-const aRecord = new aws.route53.Record(
-  `${bucketNameAndUrl}-a-record`,
-  {
-    aliases: [
-      {
-        evaluateTargetHealth: false,
-        name: distribution.domainName,
-        zoneId: distribution.hostedZoneId,
-      },
-    ],
-    name: "quinnweber.com",
-    type: aws.route53.RecordType.A,
-    zoneId: zone.id,
-  },
-  {
-    protect: true,
-  },
-);
+const stack = pulumi.getStack();
+const isProduction = stack === "production";
 
-const aaaaRecord = new aws.route53.Record(
-  `${bucketNameAndUrl}-aaaa-record`,
-  {
-    aliases: [
-      {
-        evaluateTargetHealth: false,
-        name: distribution.domainName,
-        zoneId: distribution.hostedZoneId,
-      },
-    ],
-    name: "quinnweber.com",
-    type: aws.route53.RecordType.AAAA,
-    zoneId: zone.id,
-  },
-  {
-    protect: true,
-  },
-);
+let aRecord: aws.route53.Record | undefined;
+let aaaaRecord: aws.route53.Record | undefined;
 
-const distributionDomainName = distribution.domainName.apply((t) => `${t}.`);
+if (isProduction) {
+  aRecord = new aws.route53.Record(
+    `www.quinnweber.com-a-record`,
+    {
+      aliases: [
+        {
+          evaluateTargetHealth: false,
+          name: distribution.domainName,
+          zoneId: distribution.hostedZoneId,
+        },
+      ],
+      name: "quinnweber.com",
+      type: aws.route53.RecordType.A,
+      zoneId: zone.id,
+    },
+    {
+      protect: true,
+    },
+  );
+
+  aaaaRecord = new aws.route53.Record(
+    `www.quinnweber.com-aaaa-record`,
+    {
+      aliases: [
+        {
+          evaluateTargetHealth: false,
+          name: distribution.domainName,
+          zoneId: distribution.hostedZoneId,
+        },
+      ],
+      name: "quinnweber.com",
+      type: aws.route53.RecordType.AAAA,
+      zoneId: zone.id,
+    },
+    {
+      protect: true,
+    },
+  );
+}
 
 const cNameRecord = new aws.route53.Record(
   `${bucketNameAndUrl}-cname-record`,
   {
     name: bucketNameAndUrl,
-    records: [distributionDomainName],
+    records: [distribution.domainName.apply((t) => t)],
     ttl: 3600,
     type: aws.route53.RecordType.CNAME,
     zoneId: zone.id,
@@ -195,6 +201,6 @@ export const exampleBucketOwnershipControlsUrn =
   exampleBucketOwnershipControls.urn;
 export const distributionUrn = distribution.urn;
 export const zoneUrn = zone.urn;
-export const aRecordUrn = aRecord.urn;
-export const aaaaRecordUrn = aaaaRecord.urn;
+export const aRecordUrn = aRecord?.urn;
+export const aaaaRecordUrn = aaaaRecord?.urn;
 export const cNameRecordUrn = cNameRecord.urn;
