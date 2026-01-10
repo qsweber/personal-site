@@ -142,7 +142,7 @@ let aaaaRecord: aws.route53.Record | undefined;
 
 if (isProduction) {
   aRecord = new aws.route53.Record(
-    `${bucketNameAndUrl}-a-record`,
+    `www.quinnweber.com-a-record`,
     {
       aliases: [
         {
@@ -161,7 +161,7 @@ if (isProduction) {
   );
 
   aaaaRecord = new aws.route53.Record(
-    `${bucketNameAndUrl}-aaaa-record`,
+    `www.quinnweber.com-aaaa-record`,
     {
       aliases: [
         {
