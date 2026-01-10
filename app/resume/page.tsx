@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Resume as IResume } from "../lib/resume";
+import { RESUME } from "../lib/resume";
 import styled from "@emotion/styled";
 
 const SINGLE_SPACE = 4;
@@ -53,14 +53,15 @@ const BulletWrapper = styled.div(() => ({
   justifyContent: "flex-start",
 }));
 
-export const Resume: FunctionComponent<{ resume: IResume }> = ({ resume }) => (
-  <Container>
-    <Line style={{ justifyContent: "center" }}>
-      <Header>{resume.name}</Header>
-    </Line>
-    <Line style={{ justifyContent: "center" }}>{resume.description}</Line>
+export default function Resume() {
+  return (
+    <Container>
+      <Line style={{ justifyContent: "center" }}>
+        <Header>{RESUME.name}</Header>
+      </Line>
+      <Line style={{ justifyContent: "center" }}>{RESUME.description}</Line>
     <hr />
-    {resume.sections.map(({ header, entities }) => (
+    {RESUME.sections.map(({ header, entities }) => (
       <DoubleTopSpacedSection>
         <Header>{header}</Header>
         <LeftSpacedSection>
@@ -100,4 +101,5 @@ export const Resume: FunctionComponent<{ resume: IResume }> = ({ resume }) => (
       </DoubleTopSpacedSection>
     ))}
   </Container>
-);
+  );
+}

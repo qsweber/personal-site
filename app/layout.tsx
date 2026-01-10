@@ -78,13 +78,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <Container>
           <NavBar>
-            <Initials>Title</Initials>
+            <Initials>QSW</Initials>
             <LinkGroup>
               <SpacedLink href="/" isActive={pathname === "/"}>
                 Home
               </SpacedLink>
-              <SpacedLink href="/another" isActive={pathname === "/another"}>
-                Another
+              <SpacedLink href="https://github.com/qsweber" isActive={false}>
+                Portfolio
               </SpacedLink>
             </LinkGroup>
           </NavBar>
