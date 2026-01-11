@@ -6,11 +6,7 @@ export const metadata: Metadata = {
   description: "Personal website of Quinn Weber",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
