@@ -143,10 +143,11 @@ const zone = new aws.route53.Zone(
 
 let aRecord: aws.route53.Record | undefined;
 let aaaaRecord: aws.route53.Record | undefined;
+let wwwCNameRecord: aws.route53.Record | undefined;
 
 if (isProduction) {
   aRecord = new aws.route53.Record(
-    `www.quinnweber.com-a-record`,
+    `quinnweber.com-a-record`,
     {
       aliases: [
         {
@@ -165,7 +166,7 @@ if (isProduction) {
   );
 
   aaaaRecord = new aws.route53.Record(
-    `www.quinnweber.com-aaaa-record`,
+    `quinnweber.com-aaaa-record`,
     {
       aliases: [
         {
@@ -176,6 +177,20 @@ if (isProduction) {
       ],
       name: "quinnweber.com",
       type: aws.route53.RecordType.AAAA,
+      zoneId: zone.id,
+    },
+    {
+      protect: true,
+    },
+  );
+
+  wwwCNameRecord = new aws.route53.Record(
+    `www.quinnweber.com-cname-record`,
+    {
+      name: "www.quinnweber.com",
+      records: [distribution.domainName.apply((t) => t)],
+      ttl: 3600,
+      type: aws.route53.RecordType.CNAME,
       zoneId: zone.id,
     },
     {
@@ -207,4 +222,5 @@ export const distributionUrn = distribution.urn;
 export const zoneUrn = zone.urn;
 export const aRecordUrn = aRecord?.urn;
 export const aaaaRecordUrn = aaaaRecord?.urn;
+export const wwwCNameRecordUrn = wwwCNameRecord?.urn;
 export const cNameRecordUrn = cNameRecord.urn;
