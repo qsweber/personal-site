@@ -1,6 +1,6 @@
 "use client";
 
-import { RESUME } from "../lib/resume";
+import { RESUME } from "./resume";
 import styled from "@emotion/styled";
 
 const SINGLE_SPACE = 4;

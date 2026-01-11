@@ -71,10 +71,17 @@ const exampleBucketOwnershipControls = new aws.s3.BucketOwnershipControls(
   },
 );
 
+const stack = pulumi.getStack();
+const isProduction = stack === "production";
+
+const distributionAliases = isProduction
+  ? [bucketNameAndUrl, "quinnweber.com", "www.quinnweber.com"]
+  : [bucketNameAndUrl];
+
 const distribution = new aws.cloudfront.Distribution(
   `${bucketNameAndUrl}-distribution`,
   {
-    aliases: [bucketNameAndUrl],
+    aliases: distributionAliases,
     defaultCacheBehavior: {
       allowedMethods: ["GET", "HEAD"],
       cachedMethods: ["GET", "HEAD"],
@@ -133,9 +140,6 @@ const zone = new aws.route53.Zone(
     protect: true,
   },
 );
-
-const stack = pulumi.getStack();
-const isProduction = stack === "production";
 
 let aRecord: aws.route53.Record | undefined;
 let aaaaRecord: aws.route53.Record | undefined;
