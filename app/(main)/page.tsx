@@ -2,7 +2,7 @@
 
 import styled from "@emotion/styled";
 
-import { Section } from "./components/Section";
+import { Section } from "../components/Section";
 
 const BackgroundImg = styled.img(() => ({
   maxWidth: "100%",
@@ -15,7 +15,7 @@ export default function Home() {
       <BackgroundImg src="background.jpg" alt="background" />
       <Section>
         Hello! Check out my portfolio of work or contact me at one of the links
-        below.
+        below test.
       </Section>
     </div>
   );
