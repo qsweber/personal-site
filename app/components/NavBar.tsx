@@ -18,7 +18,7 @@ const Initials = styled.div(() => ({
 }));
 
 const LinkGroup = styled.nav(() => ({
-  margin: "auto 0",
+  margin: "auto 0", // centers it vertically within NavBar
 }));
 
 const StyledLink = styled.a<{ $isActive: boolean }>(({ $isActive }) => ({
