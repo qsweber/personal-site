@@ -1,3 +1,5 @@
 encryptionsalt: v1:RhFSyGWLXMA=:v1:/w4OfHVeRKB6wu8J:N+mm3/6o/qzc7gxWhsEVXhrOZG1JOQ==
 config:
   bucket: dev-personal.quinnweber.com
+  certificateArn: arn:aws:acm:us-east-1:120356305272:certificate/10f59a3f-a08e-4b8d-8a4c-f0a5fcb61e83
+  zoneId: Z07290422T6PHN4TKVNW0

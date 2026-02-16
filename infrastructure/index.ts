@@ -10,7 +10,6 @@ const bucket = new aws.s3.Bucket(
   {
     arn: `arn:aws:s3:::${bucketNameAndUrl}`,
     bucket: bucketNameAndUrl,
-    hostedZoneId: "Z3BJ6K6RIION7M",
     requestPayer: "BucketOwner",
     serverSideEncryptionConfiguration: {
       rule: {
@@ -26,8 +25,6 @@ const bucket = new aws.s3.Bucket(
       errorDocument: "index.html",
       indexDocument: "index.html",
     },
-    websiteDomain: "s3-website-us-west-2.amazonaws.com",
-    websiteEndpoint: `${bucketNameAndUrl}.s3-website-us-west-2.amazonaws.com`,
   },
   {
     protect: true,
@@ -61,7 +58,7 @@ const bucketPolicy = new aws.s3.BucketPolicy(
   { dependsOn: publicAccessBlock },
 );
 
-const exampleBucketOwnershipControls = new aws.s3.BucketOwnershipControls(
+const bucketOwnershipControls = new aws.s3.BucketOwnershipControls(
   `${bucketNameAndUrl}-ownership-controls`,
   {
     bucket: bucket.id,
@@ -119,22 +116,10 @@ const distribution = new aws.cloudfront.Distribution(
       },
     },
     viewerCertificate: {
-      acmCertificateArn:
-        "arn:aws:acm:us-east-1:120356305272:certificate/10f59a3f-a08e-4b8d-8a4c-f0a5fcb61e83",
+      acmCertificateArn: config.get("certificateArn"),
       minimumProtocolVersion: "TLSv1.2_2021",
       sslSupportMethod: "sni-only",
     },
-  },
-  {
-    protect: true,
-  },
-);
-
-const zone = new aws.route53.Zone(
-  "www.quinnweber.com-zone",
-  {
-    comment: "",
-    name: "quinnweber.com",
   },
   {
     protect: true,
@@ -158,7 +143,7 @@ if (isProduction) {
       ],
       name: "quinnweber.com",
       type: aws.route53.RecordType.A,
-      zoneId: zone.id,
+      zoneId: config.require("zoneId"),
     },
     {
       protect: true,
@@ -177,7 +162,7 @@ if (isProduction) {
       ],
       name: "quinnweber.com",
       type: aws.route53.RecordType.AAAA,
-      zoneId: zone.id,
+      zoneId: config.require("zoneId"),
     },
     {
       protect: true,
@@ -191,7 +176,7 @@ if (isProduction) {
       records: [distribution.domainName.apply((t) => t)],
       ttl: 3600,
       type: aws.route53.RecordType.CNAME,
-      zoneId: zone.id,
+      zoneId: config.require("zoneId"),
     },
     {
       protect: true,
@@ -206,7 +191,7 @@ const cNameRecord = new aws.route53.Record(
     records: [distribution.domainName.apply((t) => t)],
     ttl: 3600,
     type: aws.route53.RecordType.CNAME,
-    zoneId: zone.id,
+    zoneId: config.require("zoneId"),
   },
   {
     protect: true,
@@ -214,12 +199,12 @@ const cNameRecord = new aws.route53.Record(
 );
 
 export const bucketUrn = bucket.urn;
+export const s3BucketUri = pulumi.interpolate`s3://${bucket.bucket}`;
 export const publicAccessBlockUrn = publicAccessBlock.urn;
 export const bucketPolicyUrn = bucketPolicy.urn;
-export const exampleBucketOwnershipControlsUrn =
-  exampleBucketOwnershipControls.urn;
+export const exampleBucketOwnershipControlsUrn = bucketOwnershipControls.urn;
 export const distributionUrn = distribution.urn;
-export const zoneUrn = zone.urn;
+export const distributionId = distribution.id;
 export const aRecordUrn = aRecord?.urn;
 export const aaaaRecordUrn = aaaaRecord?.urn;
 export const wwwCNameRecordUrn = wwwCNameRecord?.urn;
