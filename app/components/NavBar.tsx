@@ -1,19 +1,14 @@
 "use client";
 
+import { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styled from "@emotion/styled";
-import { ReactNode } from "react";
 
 const NavBarWrapper = styled.div(() => ({
   display: "flex",
   justifyContent: "space-between",
   padding: "20px 0",
-  position: "relative",
-}));
-
-const LinkGroup = styled.nav(() => ({
-   margin: "auto 0", // centers it vertically within NavBar
 }));
 
 const Initials = styled.div(() => ({
@@ -22,9 +17,15 @@ const Initials = styled.div(() => ({
   fontSize: 36,
 }));
 
+const LinkGroup = styled.nav(() => ({
+  margin: "auto 0", // centers it vertically within NavBar
+}));
+
 const StyledLink = styled.a<{ $isActive: boolean }>(({ $isActive }) => ({
   marginLeft: 20,
   textDecoration: $isActive ? "underline" : "none",
+  color: "inherit",
+  fontWeight: "600",
 }));
 
 const SpacedLink = ({
