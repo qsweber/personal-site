@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
 import { ReactNode } from "react";
+import { Work_Sans } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Quinn Weber",
   description: "Personal website of Quinn Weber",
 };
 
+const workSans = Work_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-work-sans",
+});
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={workSans.variable}>
       <head>
         <meta charSet="utf-8" />
         <link rel="icon" href="/favicon.ico" />
