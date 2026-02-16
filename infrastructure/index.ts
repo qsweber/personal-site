@@ -198,65 +198,6 @@ const cNameRecord = new aws.route53.Record(
   },
 );
 
-// Create Cognito User Pool for authentication
-const userPool = new aws.cognito.UserPool(`${bucketNameAndUrl}-user-pool`, {
-  name: `${bucketNameAndUrl}-user-pool`,
-  autoVerifiedAttributes: ["email"],
-  usernameAttributes: ["email"],
-  passwordPolicy: {
-    minimumLength: 8,
-    requireLowercase: true,
-    requireNumbers: true,
-    requireSymbols: true,
-    requireUppercase: true,
-    temporaryPasswordValidityDays: 7,
-  },
-  emailConfiguration: {
-    emailSendingAccount: "COGNITO_DEFAULT",
-  },
-  verificationMessageTemplate: {
-    defaultEmailOption: "CONFIRM_WITH_CODE",
-    emailMessage: "Your verification code is {####}",
-    emailSubject: "Verify your email",
-  },
-  accountRecoverySetting: {
-    recoveryMechanisms: [
-      {
-        name: "verified_email",
-        priority: 1,
-      },
-    ],
-  },
-});
-
-// Create Cognito User Pool Client
-const userPoolClient = new aws.cognito.UserPoolClient(
-  `${bucketNameAndUrl}-user-pool-client`,
-  {
-    name: `${bucketNameAndUrl}-user-pool-client`,
-    userPoolId: userPool.id,
-    generateSecret: false,
-    explicitAuthFlows: [
-      "ALLOW_REFRESH_TOKEN_AUTH",
-      "ALLOW_USER_PASSWORD_AUTH",
-      "ALLOW_USER_SRP_AUTH",
-    ],
-    preventUserExistenceErrors: "ENABLED",
-    enableTokenRevocation: true,
-    authSessionValidity: 3,
-    accessTokenValidity: 60,
-    idTokenValidity: 60,
-    refreshTokenValidity: 30,
-    tokenValidityUnits: {
-      accessToken: "minutes",
-      idToken: "minutes",
-      refreshToken: "days",
-    },
-    readAttributes: ["email", "email_verified", "name"],
-    writeAttributes: ["email", "name"],
-  },
-);
-
 export const bucketUrn = bucket.urn;
 export const s3BucketUri = pulumi.interpolate`s3://${bucket.bucket}`;
 export const publicAccessBlockUrn = publicAccessBlock.urn;
@@ -268,5 +209,3 @@ export const aRecordUrn = aRecord?.urn;
 export const aaaaRecordUrn = aaaaRecord?.urn;
 export const wwwCNameRecordUrn = wwwCNameRecord?.urn;
 export const cNameRecordUrn = cNameRecord.urn;
-export const userPoolId = userPool.id;
-export const userPoolClientId = userPoolClient.id;
